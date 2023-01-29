@@ -1,9 +1,5 @@
 using System.Text.Json;
-using System.Xml.Serialization;
 using Marten;
-using Marten.Linq;
-using Newtonsoft.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MartenDemo;
 
@@ -23,19 +19,19 @@ public class MartenService : IMartenService
             for (int i = 0; i < 50000; i++)
             {
                 UserTest userTest = new UserTest { FirstName = $"Han {i}", LastName = $"Solo {1}" };
-                session.Store(userTest);    
+                session.Store(userTest);
             }
-            
+
             await session.SaveChangesAsync();
         }
-        
+
         await using (IQuerySession session = _store.QuerySession())
         {
             JsonSerializerOptions optins = new()
             {
                 WriteIndented = true
             };
-            
+
             IReadOnlyList<UserTest> existing = await session.Query<UserTest>().ToListAsync();
 
             foreach (UserTest user in existing)
@@ -43,16 +39,16 @@ public class MartenService : IMartenService
                 Console.WriteLine(JsonSerializer.Serialize(user, optins));
             }
         }
-        
+
         await using (IQuerySession session = _store.QuerySession())
         {
             Guid userId = Guid.Parse("0185fde1-42a9-45f0-b4e1-48a029eed992");
-            
+
             IReadOnlyList<UserTest> existing = await session.Query<UserTest>().ToListAsync();
 
             UserTest? user = await session.LoadAsync<UserTest>(userId);
         }
-        
+
         Guid questId = Guid.NewGuid();
         await using (IDocumentSession session = _store.OpenSession())
         {
