@@ -32,7 +32,7 @@ namespace MartenDemo
                         options.Connection("Server=localhost;Port=5432;Database=postgres;User ID=postgres;Password=postgres;");
                         options.AutoCreateSchemaObjects = AutoCreate.All;
                         
-                        options.Schema.Include(new MyRegistry());
+                        options.Schema.Include(new MyMartenRegistry());
                         
                     });
                 })

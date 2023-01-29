@@ -7,19 +7,6 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MartenDemo;
 
-public class MyRegistry : MartenRegistry
-{
-    public MyRegistry()
-    {
-        base.For<UserTest>().DocumentAlias("user");
-    }
-}
-
-public interface IMartenService
-{
-    Task DoWorkAsync();
-}
-
 public class MartenService : IMartenService
 {
     private readonly IDocumentStore _store;
