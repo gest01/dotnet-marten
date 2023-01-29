@@ -43,10 +43,7 @@ public class MartenService : IMartenService
         await using (IQuerySession session = _store.QuerySession())
         {
             Guid userId = Guid.Parse("0185fde1-42a9-45f0-b4e1-48a029eed992");
-
-            IReadOnlyList<UserTest> existing = await session.Query<UserTest>().ToListAsync();
-
-            UserTest? user = await session.LoadAsync<UserTest>(userId);
+            UserTest user = await session.LoadAsync<UserTest>(userId);
         }
 
         Guid questId = Guid.NewGuid();
