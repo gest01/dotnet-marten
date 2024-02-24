@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Dumpify;
 using Marten;
 
 namespace MartenDemo;
@@ -16,6 +17,9 @@ public class MartenService : IMartenService
     {
         await using (IDocumentSession session = _store.LightweightSession())
         {
+            session.DumpConsole();
+            session.DumpDebug();
+
             for (int i = 0; i < 50000; i++)
             {
                 UserTest userTest = new UserTest { FirstName = $"Han {i}", LastName = $"Solo {1}" };
